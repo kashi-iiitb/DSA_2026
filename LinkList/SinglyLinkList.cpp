@@ -26,14 +26,17 @@ class sll_node{
 class LList{
   private:
     sll_node *head;
+    unsigned int _size;
     //sll_node *tail;
   public:
     LList(){
       head = nullptr;
+      _size = 0;
     }
     void add(int val){
       if(head == nullptr){
         head = new sll_node(val);
+        _size = 1;
         return;
       } else{
         sll_node *tmp = head;
@@ -41,6 +44,7 @@ class LList{
           tmp = tmp->get_next();
         }
         tmp->set_next(new sll_node(val));
+        _size++;
       }
     } //end of add()
     void display_elems(){
@@ -57,11 +61,13 @@ class LList{
     void push_front(int val){
       if(head == nullptr){
         head = new sll_node(val);
+        _size = 1;
         return;
       } else{
         sll_node *tmp = new sll_node(val);
         tmp->set_next(head);
         head = tmp;
+        _size++;
       }
     }
     void clear(){
@@ -70,7 +76,15 @@ class LList{
         head = tmp->get_next();
         free(tmp);
         tmp = head;
+        _size--;
       }
+      //_size = 0;
+    }
+    unsigned int size(){
+      return _size;
+    }
+    bool empty(){
+      return (_size==0)?true:false;
     }
     //destructor
     /*~LList(){
@@ -92,5 +106,6 @@ int main(){
   l1.push_front(200);
   l1.display_elems();
   l1.clear();
+  std::cout << std::boolalpha << l1.empty() <<"\n";
   l1.display_elems();
 }
